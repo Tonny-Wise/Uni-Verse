@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/auth/screens/splash_screen.dart';
+import '../../features/auth/screens/onboarding_screen.dart';
+import '../../features/auth/screens/welcome_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
 import '../../features/feed/screens/feed_screen.dart';
@@ -20,6 +23,9 @@ import '../../data/providers/auth_provider.dart';
 
 // Route names
 class AppRoutes {
+  static const String splash = '/';
+  static const String onboarding = '/onboarding';
+  static const String welcome = '/welcome';
   static const String login = '/login';
   static const String signup = '/signup';
   static const String feed = '/feed';
@@ -46,31 +52,66 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: AppRoutes.feed,
+    initialLocation: AppRoutes.splash,
     debugLogDiagnostics: true,
     redirect: (context, state) {
       final isLoggedIn = authState.valueOrNull != null;
-      final isAuthRoute = state.matchedLocation == AppRoutes.login ||
-          state.matchedLocation == AppRoutes.signup;
+      final currentPath = state.matchedLocation;
 
-      // Redirect to login if not authenticated
-      if (!isLoggedIn && !isAuthRoute) {
-        return AppRoutes.login;
+      // Allow splash, onboarding, and welcome without auth
+      final publicRoutes = [
+        AppRoutes.splash,
+        AppRoutes.onboarding,
+        AppRoutes.welcome,
+        AppRoutes.login,
+        AppRoutes.signup,
+      ];
+
+      final isPublicRoute = publicRoutes.contains(currentPath);
+
+      // If on splash, let it handle its own navigation
+      if (currentPath == AppRoutes.splash) {
+        return null;
       }
 
-      // Redirect to feed if already authenticated and on auth route
-      if (isLoggedIn && isAuthRoute) {
+      // Redirect to feed if already authenticated and on auth/welcome routes
+      if (isLoggedIn && isPublicRoute && currentPath != AppRoutes.splash) {
         return AppRoutes.feed;
+      }
+
+      // Redirect to welcome if not authenticated and trying to access protected route
+      if (!isLoggedIn && !isPublicRoute) {
+        return AppRoutes.welcome;
       }
 
       return null;
     },
     routes: [
-      // Auth routes (no bottom nav)
+      // Splash screen (initial route)
+      GoRoute(
+        path: AppRoutes.splash,
+        builder: (context, state) => const SplashScreen(),
+      ),
+
+      // Onboarding (first-time users)
+      GoRoute(
+        path: AppRoutes.onboarding,
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+
+      // Welcome screen (login/signup choice)
+      GoRoute(
+        path: AppRoutes.welcome,
+        builder: (context, state) => const WelcomeScreen(),
+      ),
+
+      // Login
       GoRoute(
         path: AppRoutes.login,
         builder: (context, state) => const LoginScreen(),
       ),
+
+      // Signup
       GoRoute(
         path: AppRoutes.signup,
         builder: (context, state) => const SignupScreen(),

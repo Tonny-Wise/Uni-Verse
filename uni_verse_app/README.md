@@ -10,7 +10,7 @@ Uni-Verse connects students across Ugandan universities, enabling them to share 
 
 - **Feed & Stories** - Share posts with images, like, comment, and bookmark content. View ephemeral stories from followed users.
 - **Messaging** - Real-time one-on-one and group conversations with read receipts.
-- **Groups** - Join or create university-specific groups for study sessions, clubs, and events.
+- **Groups** - Join or create university-specifaic groups for study sessions, clubs, and events.
 - **Video Calls** - Host and join video calls with screen sharing capabilities (powered by Agora).
 - **Profile** - Customize your profile with university affiliation, bio, and verification badge.
 - **Search** - Discover users and content across the platform.
