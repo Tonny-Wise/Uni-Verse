@@ -7,9 +7,8 @@ class AppConstants {
   static const String appTagline = 'Connect. Learn. Grow.';
 
   // ─── Supabase ────────────────────────────────────────────────────────────
-  // TODO: Replace with your actual Supabase credentials
-  static const String supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const String supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+  static const String supabaseUrl = 'https://xtnmjwxugblqybmsgztu.supabase.co';
+  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0bm1qd3h1Z2JscXlibXNnenR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNzIzODUsImV4cCI6MjA4Nzc0ODM4NX0.wVWYFBM_IpU9pG4jjl3WGTecMy41mII8TG7Np_mApMI';
 
   // ─── Agora ───────────────────────────────────────────────────────────────
   // TODO: Replace with your actual Agora credentials
